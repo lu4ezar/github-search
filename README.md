@@ -1,5 +1,4 @@
-*This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+## Github Search
 ```
 git clone https://github.com/lu4ezar/github-search
 cd github-search
@@ -16,3 +15,5 @@ REQUEST_DATA если длина строки достигла 3х символ�
 List получает error для вывода сообщения об ошибке и data для передачи в Project. Для оптимизации использован react-window.  
 2 саги: watcher и worker. Debounce реализован с помощью takeLatest и delay. Watcher слушает последний REQUEST_DATA, worker ждёт 1000мс, потом делает запрос, и либо приводит данные в нужный вид и вызывает reducer, либо возвращает ошибку.  
 И loading, и error регулируются экшенами REQUEST_DATA.
+
+*This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

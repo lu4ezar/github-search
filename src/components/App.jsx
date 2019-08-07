@@ -2,8 +2,8 @@
 import React from 'react';
 import Spinner from 'react-spinkit';
 import styled from 'styled-components';
-import type { Query } from '../../types/query';
-import type { LoadingState } from '../../types/loading';
+import type { Query } from '../types/query';
+import type { LoadingState } from '../types/loading';
 import ListContainer from '../containers/ListContainer';
 
 const Container = styled.div`

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './react/containers/AppContainer';
+import App from './containers/AppContainer';
 import configureStore from './redux/store';
 import './index.css';
 import watchDataRequest from './redux/sagas';

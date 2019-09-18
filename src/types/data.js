@@ -16,6 +16,8 @@ export type DataType = {
 	watchersCount: WatchersCount
 };
 
+export type DataArray = Array<DataType>;
+
 export type DataActions = 'UPDATE_DATA';
 
 export type DataAction = {

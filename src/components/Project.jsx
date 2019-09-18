@@ -3,7 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import type { DataType } from '../types/data';
 
-type Props = DataType;
+type Props = {
+	data: DataType,
+	index: number
+}
 
 const StyledProject = styled.div`
 	border: 1px solid black;

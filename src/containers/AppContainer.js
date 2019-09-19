@@ -15,7 +15,7 @@ const updateQueryCheckLength = (query: Query) => (dispatch: Dispatch) => {
 
 const mapStateToProps = state => ({
 	query: state.query,
-	isLoading: state.loading,
+	isLoading: state.isLoading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

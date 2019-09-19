@@ -4,7 +4,7 @@ import {
 	REQUEST_DATA_FAILURE
 } from '../actions/actionTypes';
 
-const loading = (state = false, action) => {
+const isLoading = (state = false, action) => {
 	switch (action.type) {
 		case REQUEST_DATA:
 			return true;
@@ -15,4 +15,4 @@ const loading = (state = false, action) => {
 			return state;
 	}
 };
-export default loading;
+export default isLoading;

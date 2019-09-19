@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Project from './Project';
-import type { IsErrorType } from '../types/isError';
+import type { ErrorType } from '../types/error';
 import type { DataArray } from '../types/data';
 
 const StyledList = styled.div`
@@ -14,21 +14,17 @@ const StyledList = styled.div`
 `;
 
 type Props = {
-	isError: IsErrorType,
+	error: ErrorType,
 	data: DataArray
 };
 
-const List = ({ data, isError }: Props) => (
+const List = ({ data, error }: Props) => (
 	<StyledList>
-		{/* isError ? (
-			<p>error, try again</p>
-		) : data && data.length ? (
+		{error ? (
+			<p>{error}</p>
+		) : (
 			data.map(({ id, ...rest }) => <Project key={id} {...rest} />)
-		) : null */}
-		{isError && <p>{isError}</p>}
-		{data.length
-			? data.map(({ id, ...rest }) => <Project key={id} {...rest} />)
-			: null}
+		)}
 	</StyledList>
 );
 

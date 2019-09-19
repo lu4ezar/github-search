@@ -9,8 +9,8 @@ import watchDataRequest from './redux/sagas';
 const initialState = {
 	query: '',
 	data: [],
-	loading: false,
-	error: false
+	isLoading: false,
+	error: ''
 };
 
 const store = configureStore(initialState);

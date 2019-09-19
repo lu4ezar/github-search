@@ -33,8 +33,9 @@ const SearchPanel = styled.div`
 `;
 const StyledSpinner = styled(Spinner)`
 	color: #972d16;
-	&.not_loading {
-		visibility: hidden;
+	visibility: hidden;
+	&.loading {
+		visibility: visible;
 	}
 `;
 const StyledInput = styled.input`
@@ -59,7 +60,7 @@ const App = ({ query, isLoading, updateQuery }: Props) => {
 			<SearchPanel>
 				<StyledSpinner
 					name='pulse'
-					className={isLoading ? '' : 'not_loading'}
+					className={isLoading && 'loading'}
 				/>
 				<StyledInput
 					placeholder='start here'

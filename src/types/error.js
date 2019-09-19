@@ -1,5 +1,5 @@
 // @flow
-export type ErrorType = boolean;
+export type ErrorType = string;
 
 export type ErrorActions = 'UPDATE_ERROR_STATE';
 

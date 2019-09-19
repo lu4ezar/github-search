@@ -4,13 +4,13 @@ import {
 	REQUEST_DATA_FAILURE
 } from '../actions/actionTypes';
 
-const errorReducer = (state = false, action) => {
+const errorReducer = (state = '', action) => {
 	switch (action.type) {
 		case REQUEST_DATA_FAILURE:
-			return true;
+			return action.error;
 		case REQUEST_DATA:
 		case REQUEST_DATA_SUCCESS:
-			return false;
+			return '';
 		default:
 			return state;
 	}

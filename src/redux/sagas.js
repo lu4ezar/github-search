@@ -26,9 +26,14 @@ const getDesiredDataShape = data =>
 
 function fetchData(query) {
 	const url = `https://api.github.com/search/repositories?q=${query}`;
-	return fetch(url).then(res =>
-		res.json().then(json => getDesiredDataShape(json.items))
-	);
+	return fetch(url)
+		.then(res => {
+			if (!res.ok) {
+				throw new Error(`Error! ${res.statusText}`);
+			}
+			return res.json();
+		})
+		.then(json => getDesiredDataShape(json.items));
 }
 
 function* dataRequestAsync() {
@@ -38,7 +43,7 @@ function* dataRequestAsync() {
 		const data = yield call(() => fetchData(query));
 		yield put(requestDataSuccess(data));
 	} catch (error) {
-		yield put({ type: REQUEST_DATA_FAILURE });
+		yield put({ type: REQUEST_DATA_FAILURE, error: error.message });
 	}
 }
 

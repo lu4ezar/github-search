@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { takeLatest, call, put, select, delay } from 'redux-saga/effects';
-import { REQUEST_DATA, REQUEST_DATA_FAILURE } from './actions/actionTypes';
+import { FETCH_DATA, FETCH_DATA_FAILURE } from './actions/actionTypes';
 import requestDataSuccess from './actions/dataActions';
 
 const getQuery = state => state.query;
@@ -43,12 +43,12 @@ function* dataRequestAsync() {
 		const data = yield call(() => fetchData(query));
 		yield put(requestDataSuccess(data));
 	} catch (error) {
-		yield put({ type: REQUEST_DATA_FAILURE, error: error.message });
+		yield put({ type: FETCH_DATA_FAILURE, error: error.message });
 	}
 }
 
 function* watchDataRequest() {
-	yield takeLatest(REQUEST_DATA, dataRequestAsync);
+	yield takeLatest(FETCH_DATA, dataRequestAsync);
 }
 
 export default watchDataRequest;

@@ -1,7 +1,7 @@
-import { REQUEST_DATA_SUCCESS } from './actionTypes';
+import { FETCH_DATA_SUCCESS } from './actionTypes';
 
 const requestDataSuccess = data => ({
-	type: REQUEST_DATA_SUCCESS,
+	type: FETCH_DATA_SUCCESS,
 	data
 });
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import Spinner from 'react-spinkit';
 import styled from 'styled-components';
-import type { Query } from '../types/query';
+import type { SearchString } from '../types/searchString';
 import type { LoadingState } from '../types/loading';
 import ListContainer from '../containers/ListContainer';
 
@@ -44,14 +44,14 @@ const StyledInput = styled.input`
 `;
 
 type Props = {
-	query: Query,
+	searchString: SearchString,
 	isLoading: LoadingState,
-	updateQuery: (event: SyntheticInputEvent<HTMLInputElement>) => void
+	updateSearchString: (event: SyntheticInputEvent<HTMLInputElement>) => void
 };
 
-const App = ({ query, isLoading, updateQuery }: Props) => {
+const App = ({ searchString, isLoading, updateSearchString }: Props) => {
 	const handleChange = event => {
-		updateQuery(event.target.value);
+		updateSearchString(event.target.value);
 	};
 
 	return (
@@ -64,7 +64,7 @@ const App = ({ query, isLoading, updateQuery }: Props) => {
 				/>
 				<StyledInput
 					placeholder='start here'
-					value={query}
+					value={searchString}
 					onChange={handleChange}
 				/>
 			</SearchPanel>

@@ -1,25 +1,25 @@
 // @flow
 import { connect } from 'react-redux';
 import App from '../components/App';
-import updateQuery from '../redux/actions/queryActions';
+import updateSearchString from '../redux/actions/searchStringActions';
 import type { Dispatch } from '../types/index';
-import type { Query } from '../types/query';
+import type { SearchString } from '../types/searchString';
 import { FETCH_DATA } from '../redux/actions/actionTypes';
 
-const updateQueryCheckLength = (query: Query) => (dispatch: Dispatch) => {
-	dispatch(updateQuery(query));
-	if (query.length > 2) {
+const updateSearchStringCheckLength = (searchString: SearchString) => (dispatch: Dispatch) => {
+	dispatch(updateSearchString(searchString));
+	if (searchString.length > 2) {
 		dispatch({ type: FETCH_DATA });
 	}
 };
 
 const mapStateToProps = state => ({
-	query: state.query,
+	searchString: state.searchString,
 	isLoading: state.isLoading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	updateQuery: (value: Query) => dispatch(updateQueryCheckLength(value))
+	updateSearchString: (value: SearchString) => dispatch(updateSearchStringCheckLength(value))
 });
 
 export default connect(

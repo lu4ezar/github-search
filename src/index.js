@@ -7,7 +7,7 @@ import './index.css';
 import watchDataRequest from './redux/sagas';
 
 const initialState = {
-	query: '',
+	searchString: '',
 	data: [],
 	isLoading: false,
 	error: ''

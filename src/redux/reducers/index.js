@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import data from './dataReducer';
-import query from './queryReducer';
+import searchString from './searchStringReducer';
 import isLoading from './loadingReducer';
 import error from './errorReducer';
 
 export default combineReducers({
 	data,
-	query,
+	searchString,
 	isLoading,
 	error
 });

@@ -1,4 +1,5 @@
 import {
+	UPDATE_SEARCH_STRING,
 	FETCH_DATA_START,
 	FETCH_DATA_SUCCESS,
 	FETCH_DATA_FAILURE
@@ -10,6 +11,7 @@ const isLoading = (state = false, action) => {
 			return true;
 		case FETCH_DATA_SUCCESS:
 		case FETCH_DATA_FAILURE:
+		case UPDATE_SEARCH_STRING:
 			return false;
 		default:
 			return state;

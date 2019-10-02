@@ -1,9 +1,12 @@
-import { FETCH_DATA_SUCCESS } from '../actions/actionTypes';
+import { CLEAR_DATA, FETCH_DATA_SUCCESS } from '../actions/actionTypes';
 
 const dataReducer = (state = [], action) => {
-	switch (action.type) {
+	const { type, data } = action;
+	switch (type) {
+		case CLEAR_DATA:
+			return [];
 		case FETCH_DATA_SUCCESS:
-			return action.data;
+			return [...state, ...data];
 		default:
 			return state;
 	}

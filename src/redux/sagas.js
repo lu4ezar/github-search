@@ -1,54 +1,65 @@
-/* eslint-disable camelcase */
 import { takeLatest, call, put, select, delay } from 'redux-saga/effects';
-import { FETCH_DATA_START, FETCH_DATA_FAILURE } from './actions/actionTypes';
+import {
+	CLEAR_DATA,
+	FETCH_DATA_FAILURE,
+	FETCH_DATA_END,
+	UPDATE_SEARCH_STRING,
+	FETCH_NEXT_PAGE,
+	FETCH_DATA_START
+} from './actions/actionTypes';
+import { fetchData, stripData, getNextPageUrl } from '../dataUtils';
 import requestDataSuccess from './actions/dataActions';
 
-const getQuery = state => state.query;
+const getSearchString = state => state.searchString;
+const getPagination = state => state.pagination;
+const getLoadingState = state => state.isLoading;
 
-const getDesiredDataShape = data =>
-	data.map(
-		({
-			id,
-			name,
-			html_url,
-			description,
-			stargazers_count,
-			watchers_count
-		}) => ({
-			id,
-			name,
-			htmlUrl: html_url,
-			description,
-			stargazersCount: stargazers_count,
-			watchersCount: watchers_count
-		})
-	);
-
-function fetchData(query) {
-	const url = `https://api.github.com/search/repositories?q=${query}`;
-	return fetch(url)
-		.then(res => {
-			if (!res.ok) {
-				throw new Error(`Error! ${res.statusText}`);
-			}
-			return res.json();
-		})
-		.then(json => getDesiredDataShape(json.items));
+function* dataRequestNextAsync() {
+	const pagination = yield select(getPagination);
+	const hasNextPage = !!pagination.nextPageUrl;
+	const isLoading = yield select(getLoadingState);
+	if (isLoading || !hasNextPage) {
+		return;
+	}
+	yield put({ type: FETCH_DATA_START });
+	try {
+		const response = yield call(fetchData, pagination.nextPageUrl);
+		const data = stripData(response.data);
+		const nextPageUrl = getNextPageUrl(response);
+		yield put(requestDataSuccess(data, nextPageUrl));
+	} catch (error) {
+		yield put({ type: FETCH_DATA_FAILURE, error: error.message });
+	} finally {
+		yield put({ type: FETCH_DATA_END });
+	}
 }
 
 function* dataRequestAsync() {
-	yield delay(1000);
-	const query = yield select(getQuery);
+	yield delay(2000);
+	const searchString = yield select(getSearchString);
+	if (searchString.length < 3) {
+		return;
+	}
+	yield put({ type: CLEAR_DATA });
+	yield put({ type: FETCH_DATA_START });
 	try {
-		const data = yield call(() => fetchData(query));
-		yield put(requestDataSuccess(data));
+		const response = yield call(fetchData, { searchString });
+		if (!response.data.total_count) {
+			throw new Error('Nothing was found!');
+		}
+		const data = stripData(response.data);
+		const nextPageUrl = getNextPageUrl(response);
+		yield put(requestDataSuccess(data, nextPageUrl));
 	} catch (error) {
 		yield put({ type: FETCH_DATA_FAILURE, error: error.message });
+	} finally {
+		yield put({ type: FETCH_DATA_END });
 	}
 }
 
 function* watchDataRequest() {
-	yield takeLatest(FETCH_DATA_START, dataRequestAsync);
+	yield takeLatest(UPDATE_SEARCH_STRING, dataRequestAsync);
+	yield takeLatest(FETCH_NEXT_PAGE, dataRequestNextAsync);
 }
 
 export default watchDataRequest;

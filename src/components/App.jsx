@@ -13,9 +13,9 @@ const Container = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin: auto;
-	padding: 0 5em 3em 5em;
+	padding: 3% 3% 3% 3%;
 	height: 100%;
-	@media (min-width: 960px) and (max-width: 1439px) {
+	@media (min-width: 768px) and (max-width: 1439px) {
 		width: 60%;
 	}
 	@media (min-width: 1440px) {
@@ -58,10 +58,7 @@ const App = ({ searchString, isLoading, updateSearchString }: Props) => {
 		<Container>
 			<h1>Search for projects on GitHub</h1>
 			<SearchPanel>
-				<StyledSpinner
-					name='pulse'
-					className={isLoading && 'loading'}
-				/>
+				<StyledSpinner name='pulse' className={isLoading && 'loading'} />
 				<StyledInput
 					placeholder='start here'
 					value={searchString}

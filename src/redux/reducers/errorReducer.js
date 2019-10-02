@@ -1,15 +1,15 @@
 import {
+	FETCH_DATA_FAILURE,
 	FETCH_DATA_START,
-	FETCH_DATA_SUCCESS,
-	FETCH_DATA_FAILURE
+	UPDATE_SEARCH_STRING
 } from '../actions/actionTypes';
 
 const errorReducer = (state = '', action) => {
 	switch (action.type) {
 		case FETCH_DATA_FAILURE:
 			return action.error;
+		case UPDATE_SEARCH_STRING:
 		case FETCH_DATA_START:
-		case FETCH_DATA_SUCCESS:
 			return '';
 		default:
 			return state;

@@ -38,11 +38,8 @@ const List = ({ data, error, fetchNextPage }: Props) => {
 	};
 	return (
 		<StyledList onScroll={debounceOnScroll(onScroll)}>
-			{error ? (
-				<p>Error: {error}</p>
-			) : (
-				data.map(({ id, ...rest }) => <Project key={id} {...rest} />)
-			)}
+			{data.map(({ id, ...rest }) => <Project key={id} {...rest} />)}
+			{error && <p>Error: {error}</p>}
 		</StyledList>
 	);
 };

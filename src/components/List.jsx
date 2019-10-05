@@ -2,16 +2,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import debounce from 'lodash.debounce';
+import { FixedSizeList } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import Project from './Project';
 import type { ErrorType } from '../types/error';
 import type { DataArray } from '../types/data';
 
-const StyledList = styled.div`
+const OuterList = styled.div`
 	height: 100%;
 	width: 100%;
-	border: thick double black;
-	overflow: auto;
+	overflow: hidden;
 	background: #fcfafa;
+	border: thin solid black;
+	border-left: none;
 `;
 
 type Props = {
@@ -29,18 +32,44 @@ const debounceOnScroll = fn => {
 };
 
 const List = ({ data, error, fetchNextPage }: Props) => {
+	const Row = ({
+		index,
+		style
+	}: {
+		index: number,
+		style: $Shape<CSSStyleDeclaration>
+	}) => <Project style={style} {...data[index]} />;
+
 	const onScroll = e => {
 		const { scrollHeight, scrollTop, clientHeight } = e.target;
-		const closeToBottom = scrollHeight - scrollTop <= clientHeight * 2;
-		if (closeToBottom) {
+		const listBottom = scrollHeight - scrollTop === clientHeight;
+		if (listBottom) {
 			fetchNextPage();
 		}
 	};
+
 	return (
-		<StyledList onScroll={debounceOnScroll(onScroll)}>
-			{data.map(({ id, ...rest }) => <Project key={id} {...rest} />)}
+		<>
+			{data.length ? (
+				<OuterList onScroll={debounceOnScroll(onScroll)}>
+					<AutoSizer>
+						{({ height, width }) => (
+							<FixedSizeList
+								initialScrollOffset={16}
+								itemCount={data.length}
+								itemSize={120}
+								height={height}
+								width={width}
+								itemData={data}
+							>
+								{Row}
+							</FixedSizeList>
+						)}
+					</AutoSizer>
+				</OuterList>
+			) : null}
 			{error && <p>Error: {error}</p>}
-		</StyledList>
+		</>
 	);
 };
 

@@ -10,6 +10,7 @@ import type {
 } from '../types/data';
 
 type Props = {
+	style: $Shape<CSSStyleDeclaration>,
 	name: Name,
 	htmlUrl: HtmlUrl,
 	description: Description,
@@ -19,19 +20,24 @@ type Props = {
 
 const StyledProject = styled.div`
 	border: 1px solid black;
-	border-radius: 4px;
-	margin: 1em;
-	padding: 0.5em;
+	margin: 1em 0;
+	& > p {
+		color: cornflowerblue;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 `;
 
 const Project = ({
+	style,
 	name,
 	htmlUrl,
 	description,
 	stargazersCount,
 	watchersCount
 }: Props) => (
-	<StyledProject>
+	<StyledProject style={style}>
 		<h3>
 			<a href={htmlUrl} target='_blank' rel='noopener noreferrer'>
 				{name}

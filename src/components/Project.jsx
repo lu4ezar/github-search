@@ -19,6 +19,7 @@ type Props = {
 };
 
 const StyledProject = styled.div`
+	box-sizing: border-box;
 	border: 1px solid black;
 	margin: 1em 0;
 	& > p {
